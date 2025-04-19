@@ -46,3 +46,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     fetchImages();
 });
+
+fetch("https://notion-ig-feed-git-main-abeautifulmess-devs-projects.vercel.app/")
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Erro na resposta da API: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => console.log("JSON recebido:", data))
+    .catch(error => console.error("Erro ao buscar posts:", error));
