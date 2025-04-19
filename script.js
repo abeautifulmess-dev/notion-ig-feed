@@ -1,25 +1,19 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const imageGrid = document.getElementById("imageGrid");
     const loadMoreBtn = document.getElementById("loadMore");
     const refreshBtn = document.getElementById("refresh");
 
-    let allPosts = []; // Simulação de database
-    let displayedCount = 6; // Número inicial de imagens
+    let allPosts = [];
+    let displayedCount = 6;
 
-    function fetchImages() {
-        // Simulação de posts com prioridade nos fixados
-        allPosts = [
-            { url: "imagem1.jpg", fixed: true, date: "2025-04-18" },
-            { url: "imagem2.jpg", fixed: false, date: "2025-04-17" },
-            { url: "imagem3.jpg", fixed: false, date: "2025-04-16" },
-            { url: "imagem4.jpg", fixed: true, date: "2025-04-15" },
-            { url: "imagem5.jpg", fixed: false, date: "2025-04-14" },
-            { url: "imagem6.jpg", fixed: true, date: "2025-04-13" }
-        ];
-
-        // Organizar: fixados primeiro, depois do mais novo para mais velho
-        allPosts.sort((a, b) => b.fixed - a.fixed || new Date(b.date) - new Date(a.date));
-        renderImages();
+    async function fetchImages() {
+        try {
+            const response = await fetch("http://localhost:3000/posts");
+            allPosts = await response.json();
+            renderImages();
+        } catch (error) {
+            console.error("Erro ao carregar imagens:", error);
+        }
     }
 
     function renderImages() {
@@ -41,5 +35,5 @@ document.addEventListener("DOMContentLoaded", () => {
         fetchImages();
     });
 
-    fetchImages(); // Inicializar
+    fetchImages();
 });
