@@ -37,3 +37,6 @@ app.get("/posts", async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
+
+console.log("Dados do Notion:", response.data.results);
+res.json(posts);
