@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors"); // Importa o módulo CORS
 
@@ -10,13 +11,6 @@ app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
     next();
 });
-
-require("dotenv").config();
-const express = require("express");
-const axios = require("axios");
-
-const app = express();
-const PORT = 3000;
 
 const NOTION_API_URL = "https://api.notion.com/v1/databases/";
 const DATABASE_ID = process.env.NOTION_DATABASE_ID;
