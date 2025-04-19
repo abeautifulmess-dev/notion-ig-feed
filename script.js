@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     async function fetchImages() {
         try {
-            const response = await fetch("https://notion-ig-feed.vercel.app/");
+            const response = await fetch("http://localhost:3000/posts");
             allPosts = await response.json();
             renderImages();
         } catch (error) {
@@ -21,7 +21,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         allPosts.slice(0, displayedCount).forEach(post => {
             const div = document.createElement("div");
             div.classList.add("image-container");
-            div.innerHTML = `<img src="${post.url}" alt="Postagem">`;
+            div.innerHTML = `
+                <img src="${post.url}" alt="Postagem">
+                ${post.fixed ? '<span class="fixed-badge">📌</span>' : ""}
+            `;
             imageGrid.appendChild(div);
         });
     }
