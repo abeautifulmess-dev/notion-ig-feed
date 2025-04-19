@@ -1,3 +1,16 @@
+const express = require("express");
+const cors = require("cors"); // Importa o módulo CORS
+
+const app = express();
+app.use(cors()); // Permite todas as origens
+
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*"); // Permitir qualquer origem
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    next();
+});
+
 require("dotenv").config();
 const express = require("express");
 const axios = require("axios");
