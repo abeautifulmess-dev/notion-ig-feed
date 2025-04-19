@@ -7,9 +7,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     let displayedCount = 6;
 
    const allPosts = [
-    { url: "https://via.placeholder.com/150", fixed: true, date: "2025-04-18" },
-    { url: "https://via.placeholder.com/150", fixed: false, date: "2025-04-17" },
-    { url: "https://via.placeholder.com/150", fixed: true, date: "2025-04-16" }
+    { url: "https://static-cse.canva.com/blob/759754/IMAGE1.jpg", fixed: true, date: "2025-04-18" },
+    { url: "https://static-cse.canva.com/blob/759754/IMAGE1.jpg", fixed: false, date: "2025-04-17" },
+    { url: "https://static-cse.canva.com/blob/759754/IMAGE1.jpg", fixed: true, date: "2025-04-16" }
 ];
 
 function renderImages() {
