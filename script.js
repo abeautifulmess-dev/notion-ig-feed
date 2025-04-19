@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     async function fetchImages() {
         try {
-            const response = await fetch("http://localhost:3000/posts");
+            const response = await fetch("notion-ig-feed.vercel.app");
             allPosts = await response.json();
             renderImages();
         } catch (error) {
