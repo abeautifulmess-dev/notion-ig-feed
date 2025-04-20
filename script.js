@@ -1,53 +1,67 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    const imageGrid = document.getElementById("imageGrid"); // Local onde as imagens serão exibidas
-    const loadMoreBtn = document.getElementById("loadMore"); // Botão "Ver mais"
-    const refreshBtn = document.getElementById("refresh"); // Botão de atualização
+    const imageGrid = document.getElementById("imageGrid");
+    const refreshBtn = document.getElementById("refresh");
+    const loadMoreBtn = document.getElementById("loadMore");
+    let allPosts = []; 
+    let displayedCount = 6; 
 
-    let allPosts = []; // Array para armazenar os posts carregados
-    let displayedCount = 6; // Número inicial de imagens exibidas
-
-    // Função para buscar os dados da API do Notion
+    // Buscar dados da API do Notion
     async function fetchImages() {
         try {
-            const response = await fetch("https://notion-ig-feed.onrender.com/notion-data"); // Chama o backend
+            const response = await fetch("https://seu-servico.onrender.com/notion-data");
             allPosts = await response.json();
-
-            console.log("✅ Dados recebidos:", allPosts); // Log para depuração
+            console.log("✅ Dados recebidos:", allPosts);
             renderImages();
         } catch (error) {
             console.error("❌ Erro ao carregar imagens:", error);
         }
     }
 
-    // Função para exibir as imagens na página
+    // Renderizar os posts
     function renderImages() {
-        imageGrid.innerHTML = ""; // Limpa antes de adicionar novas imagens
+        imageGrid.innerHTML = "";
 
         allPosts.slice(0, displayedCount).forEach(post => {
-            if (post.url) { // Certifica que há uma URL válida antes de exibir
-                const div = document.createElement("div");
-                div.classList.add("image-container");
+            const div = document.createElement("div");
+            div.classList.add("image-container");
+
+            if (post.images.length > 1) {
+                div.classList.add("carousel");
                 div.innerHTML = `
-                    <img src="${post.url}" alt="Postagem">
-                    ${post.fixed ? '<span class="fixed-badge">📌</span>' : ""}
+                    <div class="date-box">${new Date(post.date).toLocaleDateString("pt-BR")}</div>
+                    <div class="carousel-inner">
+                        ${post.images.map((image, index) => `<img class="slide ${index === 0 ? 'active' : ''}" src="${image}">`).join('')}
+                    </div>
+                    <button class="prev">◀</button>
+                    <button class="next">▶</button>
+                    <div class="dots">
+                        ${post.images.map((_, index) => `<span class="dot ${index === 0 ? 'active' : ''}"></span>`).join('')}
+                    </div>
                 `;
-                imageGrid.appendChild(div);
+            } else {
+                div.innerHTML = `
+                    <div class="date-box">${new Date(post.date).toLocaleDateString("pt-BR")}</div>
+                    <img src="${post.images[0]}" alt="Postagem">
+                    ${post.isVideo ? '<span class="video-icon">🎥 Reels</span>' : ""}
+                `;
             }
+
+            imageGrid.appendChild(div);
         });
 
-        console.log("📷 Imagens renderizadas:", allPosts.slice(0, displayedCount)); // Log para depuração
+        console.log("📷 Imagens renderizadas:", allPosts.slice(0, displayedCount));
     }
 
-    // Botão "Ver mais" para carregar mais imagens progressivamente
+    // Botão "Ver mais"
     loadMoreBtn?.addEventListener("click", () => {
-        displayedCount += 3; // Mostra mais imagens ao clicar em "Ver mais"
+        displayedCount += 3;
         renderImages();
     });
 
-    // Botão de atualização para recarregar as imagens
+    // Botão de atualização
     refreshBtn?.addEventListener("click", () => {
-        fetchImages(); // Atualiza os posts ao clicar no botão de atualização
+        fetchImages();
     });
 
-    fetchImages(); // Carrega imagens ao iniciar a página
+    fetchImages();
 });
