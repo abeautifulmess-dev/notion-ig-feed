@@ -28,11 +28,17 @@ app.get("/notion-data", async (req, res) => {
 
         console.log("✅ Resposta recebida da API do Notion:", JSON.stringify(response.data, null, 2));
 
-        const posts = response.data.results.map(item => ({
-            url: item.properties?.Artes?.files?.[0]?.file?.url || null, // Evita erro ao acessar imagens
-            fixed: item.properties?.Fixado?.checkbox || false,
-            date: item.properties?.Data?.date?.start || null
-        }));
+        const posts = response.data.results.map(item => {
+            // Verifica se 'Artes' e 'files' existem antes de acessar
+            const artes = item.properties?.Artes?.files;
+            const imageUrl = artes && artes.length > 0 ? artes[0]?.file?.url || artes[0]?.external?.url || null : null;
+
+            return {
+                url: imageUrl,
+                fixed: item.properties?.Fixado?.checkbox || false,
+                date: item.properties?.Data?.date?.start || null
+            };
+        });
 
         // Ordena os posts (fixados primeiro, depois por data)
         posts.sort((a, b) => b.fixed - a.fixed || new Date(b.date) - new Date(a.date));
