@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     async function fetchImages() {
         try {
-            const response = await fetch("https://notion-ig-feed.vercel.app/notion-data"); // Substitua pela URL do seu servidor na Vercel
+            const response = await fetch("https://notion-ig-feed.onrender.com/notion-data"); // Substitua pela URL do seu servidor na Vercel
             allPosts = await response.json();
 
             // Verificar se os dados estão sendo carregados corretamente
