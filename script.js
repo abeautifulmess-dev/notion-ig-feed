@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Buscar dados da API do Notion
     async function fetchImages() {
         try {
-            const response = await fetch("https://seu-servico.onrender.com/notion-data");
+            const response = await fetch("https://notion-ig-feed.onrender.com/notion-data");
             allPosts = await response.json();
             console.log("✅ Dados recebidos:", allPosts);
             renderImages();
