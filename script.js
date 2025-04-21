@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 🗓️ Função para formatar a data (Ex: Jan 01)
     function formatDate(dateString) {
         const date = new Date(dateString);
-        return date.toLocaleDateString("en-US", { month: "short", day: "2-digit" });
+        return date.toLocaleDateString("pt-BR", { month: "short", day: "2-digit" });
     }
 
     // 🚀 Buscar dados da API do Notion
