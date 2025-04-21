@@ -59,7 +59,7 @@ app.get("/notion-data", async (req, res) => {
 
 // Rota para servir a página principal
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
+    res.sendFile(path.join(__dirname, "index.html"));
 });
 
 // Inicializar servidor
