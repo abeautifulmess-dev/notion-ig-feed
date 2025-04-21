@@ -8,12 +8,16 @@ body {
 
 /* 🔝 Cabeçalho */
 #header {
+    display: flex;
+    justify-content: flex-start; /* Alinha tudo à esquerda */
+    align-items: center;
+    padding: 10px 20px;
     background: white;
     color: black;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+}
+
+#refresh {
+    margin-left: 10px; /* Espaçamento para o botão de atualização */
 }
 
 /* 📷 Grid de imagens */
@@ -23,6 +27,8 @@ body {
     gap: 16px;
     justify-content: center;
     padding: 20px;
+    border: 5px solid black; /* Bordas de 5px */
+    margin: 10px; /* Margem externa */
 }
 
 /* 📦 Containers de posts */
@@ -47,24 +53,12 @@ body {
     border-radius: 5px;
     background: rgba(255, 255, 255, 0.8);
     color: black;
-    padding: 10px;
+    padding: 5px; /* Reduzido para 5px */
     font-size: 10px;
     font-weight: 600;
 }
 
-/* 🎥 Indicativo de Reels */
-.video-icon {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: rgba(0, 0, 0, 0.6);
-    color: white;
-    padding: 4px 8px;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-/* 📦 Placeholder para posts sem imagens */
+/* 📦 Placeholder para posts */
 .placeholder {
     width: 100%;
     height: 100%;
@@ -98,37 +92,11 @@ body {
     display: block;
 }
 
-/* 🔘 Indicadores do Carrossel */
-.dots {
-    position: absolute;
-    bottom: 10px; /* Margem de 10px da parte inferior da imagem */
-    left: 50%; /* Centraliza horizontalmente */
-    transform: translateX(-50%);
-    display: flex;
-    gap: 4px;
-}
-
-.dot {
-    width: 8px;
-    height: 8px;
-    background: gray; /* Cinza padrão */
-    border-radius: 50%;
-    display: inline-block;
-    cursor: pointer;
-    opacity: 0.5; /* Reduz opacidade para inativos */
-    transition: opacity 0.3s ease; /* Suaviza a transição */
-}
-
-.dot.active {
-    background: black; /* Contraste mais forte para o ativo */
-    opacity: 1;
-}
-
 /* 🔽 Setas minimalistas */
 .prev, .next {
     position: absolute;
     top: 50%;
-    background: rgba(255, 255, 255, 0.8); /* Fundo branco com opacidade */
+    background: rgba(255, 255, 255, 0.8);
     color: black;
     border: none;
     width: 30px;
@@ -139,7 +107,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    transform: translateY(-50%); /* Corrigido alinhamento vertical */
+    transform: translateY(-50%);
+    transition: background 0.3s ease;
 }
 
 .prev { left: 10px; }
@@ -148,6 +117,32 @@ body {
 .prev:hover, .next:hover {
     background: rgba(0, 0, 0, 0.6);
     color: white;
+}
+
+/* 🔘 Indicadores do Carrossel */
+.dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 4px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background: gray;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.dot.active {
+    background: black;
+    opacity: 1;
 }
 
 /* 📌 Botão "Ver Mais" */
