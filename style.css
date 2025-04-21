@@ -24,10 +24,9 @@ body {
 #imageGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* Três colunas */
-    gap: 16px;
+    gap: 5px;
     justify-content: center;
     padding: 20px;
-    border: 5px solid black; /* Bordas de 5px */
     margin: 10px; /* Margem externa */
 }
 
