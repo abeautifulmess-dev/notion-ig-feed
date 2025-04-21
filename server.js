@@ -35,12 +35,7 @@ async function fetchNotionData() {
             images: item.properties?.Artes?.files?.map(file => file.file?.url || file.external?.url) || [],
             date: item.properties?.Data?.date?.start || "Sem data",
             mediaType: item.properties?.Tipo_de_Mídia?.select?.name || "Imagem", // Captura o tipo de mídia
-            fixed: item.properties?.Fixado?.checkbox || false,
-            title: item.properties?.Name?.title?.[0]?.text?.content || "Sem título",
-            description: item.properties?.Description?.rich_text?.[0]?.text?.content || "",
-            tags: item.properties?.Tags?.multi_select?.map(tag => tag.name) || [],
-            author: item.properties?.Autor?.rich_text?.[0]?.text?.content || "Desconhecido",
-            likes: item.properties?.Likes?.number || 0
+            fixed: item.properties?.Fixado?.checkbox || false
         })).sort((a, b) => b.fixed - a.fixed || new Date(b.date) - new Date(a.date));
     } catch (error) {
         console.error("❌ Erro ao acessar a API do Notion:", error.response?.data || error);
