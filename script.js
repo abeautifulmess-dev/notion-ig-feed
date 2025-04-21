@@ -24,11 +24,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    // 📷 Renderizar os posts
+    // 📷 Renderizar os posts e placeholders
     function renderImages() {
         imageGrid.innerHTML = "";
 
-        allPosts.slice(0, displayedCount).forEach((post, postIndex) => {
+        let totalPosts = allPosts.slice(0, displayedCount);
+        let emptySlots = Math.max(9 - totalPosts.length, 0); // Garante que sempre haja 9 itens visíveis
+
+        totalPosts.forEach((post, postIndex) => {
             const div = document.createElement("div");
             div.classList.add("image-container");
 
@@ -59,6 +62,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             imageGrid.appendChild(div);
         });
+
+        // Adiciona placeholders para preencher os slots vazios
+        for (let i = 0; i < emptySlots; i++) {
+            const div = document.createElement("div");
+            div.classList.add("image-container");
+            div.innerHTML = `<div class="placeholder"><img src="icons/image-placeholder.svg" alt="Sem imagem"></div>`;
+            imageGrid.appendChild(div);
+        }
     }
 
     // 🔄 Exibição do botão "Ver Mais"
@@ -68,9 +79,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // 🔄 Navegação no Carrossel
     window.changeSlide = function(postIndex, direction) {
-        const post = allPosts[postIndex];
-        const activeIndex = post.images.findIndex(image => document.querySelectorAll(`.carousel:nth-child(${postIndex + 1}) .slide`)[activeIndex].src === image);
-        const newIndex = (activeIndex + direction + post.images.length) % post.images.length;
+        const slides = document.querySelectorAll(`.carousel:nth-child(${postIndex + 1}) .slide`);
+        const dots = document.querySelectorAll(`.carousel:nth-child(${postIndex + 1}) .dot`);
+        const activeIndex = Array.from(slides).findIndex(slide => slide.classList.contains("active"));
+        const newIndex = (activeIndex + direction + slides.length) % slides.length;
         setSlide(postIndex, newIndex);
     };
 
@@ -78,17 +90,4 @@ document.addEventListener("DOMContentLoaded", async () => {
         const slides = document.querySelectorAll(`.carousel:nth-child(${postIndex + 1}) .slide`);
         const dots = document.querySelectorAll(`.carousel:nth-child(${postIndex + 1}) .dot`);
         slides.forEach((slide, i) => slide.classList.toggle("active", i === newIndex));
-        dots.forEach((dot, i) => dot.classList.toggle("active", i === newIndex));
-    };
-
-    // 🔘 Botão "Ver Mais"
-    loadMoreBtn?.addEventListener("click", () => {
-        displayedCount += 9; // Exibe mais 9 posts por vez
-        renderImages();
-        toggleLoadMoreButton();
-    });
-
-    refreshBtn?.addEventListener("click", fetchImages);
-
-    fetchImages();
-});
+        dots.forEach((dot, i) => dot.classList.toggle("active", i === newIndex
