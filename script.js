@@ -39,11 +39,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                 div.innerHTML = `
                     <div class="date-box">${formatDate(post.date)}</div>
                     <img src="${post.images[0]}" alt="Postagem">
-                    ${post.mediaType === "Vídeo" ? '<img class="video-icon" src="path-to-reels-image.png" alt="Reels">' : ""}
-                    ${post.fixed ? '<img class="fixed-icon" src="path-to-fixed-image.png" alt="Fixado">' : ""}
+                    ${post.mediaType === "Vídeo" ? '<img class="video-icon" src="public/icons/reels.svg" alt="Reels">' : ""}
+                    ${post.fixed ? '<img class="fixed-icon" src="public/icons/pinned.svg" alt="Fixado">' : ""}
                 `;
             } else {
-                div.innerHTML = `<div class="placeholder"><img src="path-to-placeholder-image.png" alt="Sem imagem"></div>`;
+                div.innerHTML = `<div class="placeholder"><img src="public/icons/picture.svg" alt="Sem imagem"></div>`;
             }
 
             imageGrid.appendChild(div);
