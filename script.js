@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const refreshBtn = document.getElementById("refresh");
     const loadMoreBtn = document.getElementById("loadMore");
     let allPosts = [];
-    let displayedCount = 9; // Exibir 9 posts inicialmente
+    let displayedCount = 9;
 
     // 🗓️ Função para formatar a data
     function formatDate(dateString) {
@@ -15,14 +15,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     async function fetchImages() {
         try {
             const response = await fetch("https://notion-ig-feed.onrender.com/notion-data");
-            if (!response.ok) throw new Error(`Erro: ${response.statusText}`);
             allPosts = await response.json();
             console.log("✅ Dados recebidos:", allPosts);
             renderImages();
             toggleLoadMoreButton();
         } catch (error) {
             console.error("❌ Erro ao carregar imagens:", error);
-            imageGrid.innerHTML = `<p>Erro ao carregar dados. Tente novamente mais tarde.</p>`;
         }
     }
 
@@ -31,37 +29,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         imageGrid.innerHTML = "";
 
         let totalPosts = allPosts.slice(0, displayedCount);
-        let emptySlots = Math.max(9 - totalPosts.length, 0); // Garante 9 itens visíveis
+        let emptySlots = Math.max(9 - totalPosts.length, 0);
 
         totalPosts.forEach((post, postIndex) => {
             const div = document.createElement("div");
             div.classList.add("image-container");
 
             if (post.images.length > 0) {
-                if (post.mediaType === "Carrossel" && post.images.length > 1) {
-                    div.classList.add("carousel");
-                    div.innerHTML = `
-                        <div class="date-box">${formatDate(post.date)}</div>
-                        <div class="carousel-inner">
-                            ${post.images.map((image, index) => `<img class="slide ${index === 0 ? 'active' : ''}" src="${image}">`).join('')}
-                        </div>
-                        <button class="prev" onclick="changeSlide(${postIndex}, -1)">&#10095;</button>
-                        <button class="next" onclick="changeSlide(${postIndex}, 1)">&#10095;</button>
-                        <div class="dots">
-                            ${post.images.map((_, index) => `<span class="dot ${index === 0 ? 'active' : ''}"></span>`).join('')}
-                        </div>
-                        ${post.fixed ? '<span class="fixed-icon">📌</span>' : ""}
-                    `;
-                } else {
-                    div.innerHTML = `
-                        <div class="date-box">${formatDate(post.date)}</div>
-                        <img src="${post.images[0]}" alt="Postagem">
-                        ${post.mediaType === "Vídeo" ? '<span class="video-icon">🎥</span>' : ""}
-                        ${post.fixed ? '<span class="fixed-icon">📌</span>' : ""}
-                    `;
-                }
+                div.innerHTML = `
+                    <div class="date-box">${formatDate(post.date)}</div>
+                    <img src="${post.images[0]}" alt="Postagem">
+                    ${post.mediaType === "Vídeo" ? '<img class="video-icon" src="path-to-reels-image.png" alt="Reels">' : ""}
+                    ${post.fixed ? '<img class="fixed-icon" src="path-to-fixed-image.png" alt="Fixado">' : ""}
+                `;
             } else {
-                div.innerHTML = `<div class="placeholder"><i class="fa fa-image"></i></div>`;
+                div.innerHTML = `<div class="placeholder"><img src="path-to-placeholder-image.png" alt="Sem imagem"></div>`;
             }
 
             imageGrid.appendChild(div);
@@ -70,7 +52,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         for (let i = 0; i < emptySlots; i++) {
             const div = document.createElement("div");
             div.classList.add("image-container");
-            div.innerHTML = `<div class="placeholder"><i class="fa fa-image"></i></div>`;
+            div.innerHTML = `<div class="placeholder"><img src="path-to-placeholder-image.png" alt="Sem imagem"></div>`;
             imageGrid.appendChild(div);
         }
     }
@@ -80,21 +62,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         loadMoreBtn.style.display = allPosts.length > displayedCount ? "block" : "none";
     }
 
-    // 🔄 Navegação no Carrossel
-    window.changeSlide = function (postIndex, direction) {
-        const container = imageGrid.children[postIndex];
-        const slides = container.querySelectorAll(".slide");
-        const dots = container.querySelectorAll(".dot");
-        const activeIndex = Array.from(slides).findIndex(slide => slide.classList.contains("active"));
-        const newIndex = (activeIndex + direction + slides.length) % slides.length;
-        setSlide(container, slides, dots, newIndex);
-    };
-
-    window.setSlide = function (container, slides, dots, newIndex) {
-        slides.forEach((slide, i) => slide.classList.toggle("active", i === newIndex));
-        dots.forEach((dot, i) => dot.classList.toggle("active", i === newIndex));
-    };
-
+    // 🔄 Botão de Atualizar
     refreshBtn?.addEventListener("click", fetchImages);
 
     fetchImages();
