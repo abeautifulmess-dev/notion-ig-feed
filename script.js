@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                         <div class="dots">
                             ${post.images.map((_, index) => `<span class="dot ${index === 0 ? 'active' : ''}"></span>`).join('')}
                         </div>
-                        ${post.fixed ? '<img class="fixed-icon" src="public/icons/fixed.png" alt="Fixado">' : ""}
+                        ${post.fixed ? '<img class="fixed-icon" src="public/icons/pinned.svg" alt="Fixado">' : ""}
                     `;
 
                     // Adicionar eventos de clique para os botões de navegação
@@ -60,12 +60,12 @@ document.addEventListener("DOMContentLoaded", async () => {
                     div.innerHTML = `
                         <div class="date-box">${formatDate(post.date)}</div>
                         <img src="${post.images[0]}" alt="Postagem">
-                        ${post.mediaType === "Vídeo" ? '<img class="video-icon" src="public/icons/reels.png" alt="Reels">' : ""}
-                        ${post.fixed ? '<img class="fixed-icon" src="public/icons/fixed.png" alt="Fixado">' : ""}
+                        ${post.mediaType === "Vídeo" ? '<img class="video-icon" src="public/icons/reels.svg" alt="Reels">' : ""}
+                        ${post.fixed ? '<img class="fixed-icon" src="public/icons/pinned.svg" alt="Fixado">' : ""}
                     `;
                 }
             } else {
-                div.innerHTML = `<div class="placeholder"><img src="public/icons/placeholder.png" alt="Sem imagem"></div>`;
+                div.innerHTML = `<div class="placeholder"><img src="public/icons/picture.svg" alt="Sem imagem"></div>`;
             }
 
             imageGrid.appendChild(div);
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         for (let i = 0; i < emptySlots; i++) {
             const div = document.createElement("div");
             div.classList.add("image-container");
-            div.innerHTML = `<div class="placeholder"><img src="public/icons/placeholder.png" alt="Sem imagem"></div>`;
+            div.innerHTML = `<div class="placeholder"><img src="public/icons/picture.svg" alt="Sem imagem"></div>`;
             imageGrid.appendChild(div);
         }
     }
