@@ -102,3 +102,42 @@ body {
     height: auto;
     opacity: 0.6; /* Ícone mais discreto */
 }
+.carousel .carousel-inner {
+    display: flex;
+    overflow: hidden;
+}
+
+.carousel .slide {
+    display: none;
+    width: 100%;
+}
+
+.carousel .slide.active {
+    display: block; /* Apenas o slide ativo será exibido */
+}
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    color: black;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-50%);
+    transition: background 0.3s ease;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+.prev:hover, .next:hover {
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+}
