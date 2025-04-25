@@ -74,8 +74,8 @@ body {
     position: absolute;
     top: 10px;
     right: 10px;
-    width: 10px; /* Tamanho do ícone */
-    height: auto;
+    width: 10px;!important /* Tamanho do ícone */
+    height: 10px;!important
 }
 
 /* 🎥 Ícone de Reels */
