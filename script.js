@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         for (let i = 0; i < emptySlots; i++) {
             const div = document.createElement("div");
             div.classList.add("image-container");
-            div.innerHTML = `<div class="placeholder"><img src="path-to-placeholder-image.png" alt="Sem imagem"></div>`;
+            div.innerHTML = `<div class="placeholder"><img src="public/icons/picture.svg" alt="Sem imagem"></div>`;
             imageGrid.appendChild(div);
         }
     }
