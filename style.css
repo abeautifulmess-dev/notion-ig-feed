@@ -9,7 +9,7 @@ body {
 /* 🔝 Cabeçalho */
 #header {
     display: flex;
-    justify-content: flex-start; /* Alinha tudo à esquerda */
+    justify-content: flex-start;
     align-items: center;
     padding: 10px 20px;
     background: white;
@@ -17,34 +17,43 @@ body {
 }
 
 #refresh {
-    margin-left: 10px; /* Espaçamento para o botão de atualização */
-    font-size: 20px;
+    margin-left: 10px;
     border: none;
     background: transparent;
     cursor: pointer;
 }
 
-#refresh i {
-    font-size: 20px;
-    color: black;
+#refresh img {
+    width: 20px; /* Tamanho do ícone de atualização */
+    height: auto;
 }
 
 /* 📷 Grid de imagens */
 #imageGrid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(3, 1fr); /* 3 colunas */
+    gap: 4px; /* Margens super finas entre fotos */
     justify-content: center;
     padding: 20px;
-    margin: 10px;
 }
 
 /* 📦 Containers de posts */
 .image-container {
     position: relative;
-    aspect-ratio: 3/4;
+    aspect-ratio: 3 / 4; /* Proporção de largura para altura */
     overflow: hidden;
     border-radius: 0;
+}
+
+/* Remove qualquer drop shadow */
+.image-container {
+    box-shadow: none; /* Remover sombra */
+}
+
+.image-container img {
+    width: 100%; /* Ocupa toda a largura */
+    height: 100%; /* Ocupa toda a altura */
+    object-fit: cover; /* Garante que a proporção seja mantida sem distorção */
 }
 
 /* 📅 Estilo da Data */
@@ -64,97 +73,32 @@ body {
 .fixed-icon {
     position: absolute;
     top: 10px;
-    right: 30px;
-    font-size: 16px;
-    color: gold;
+    right: 10px;
+    width: 20px; /* Tamanho do ícone */
+    height: auto;
 }
 
 /* 🎥 Ícone de Reels */
 .video-icon {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 16px;
-    color: white;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 4px 8px;
-    border-radius: 5px;
+    bottom: 10px; /* Canto inferior esquerdo */
+    left: 10px;
+    width: 20px; /* Tamanho do ícone */
+    height: auto;
 }
 
 /* 📦 Placeholder para posts */
 .placeholder {
     width: 100%;
     height: 100%;
-    background: #D3D3D3;
+    background: #D3D3D3; /* Cinza claro */
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.placeholder i {
-    font-size: 40px;
-    color: #7a7a7a;
-}
-
-/* 🎠 Estilos do Carrossel */
-.carousel {
-    position: relative;
-}
-
-.carousel .carousel-inner {
-    display: flex;
-    overflow: hidden;
-}
-
-.carousel .slide {
-    display: none;
-    width: 100%;
-}
-
-.carousel .slide.active {
-    display: block;
-}
-
-/* 🔘 Indicadores do Carrossel */
-.dots {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 4px;
-}
-
-.dot {
-    width: 8px;
-    height: 8px;
-    background: gray;
-    border-radius: 50%;
-    display: inline-block;
-    cursor: pointer;
-    opacity: 0.5;
-    transition: opacity 0.3s ease;
-}
-
-.dot.active {
-    background: black;
-    opacity: 1;
-}
-
-/* 📌 Botão "Ver Mais" */
-#loadMore {
-    display: none;
-    width: 100%;
-    background: black;
-    color: white;
-    padding: 12px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-}
-
-#loadMore:hover {
-    background: rgba(0, 0, 0, 0.8);
+.placeholder img {
+    width: 40px; /* Ícone de imagem no centro */
+    height: auto;
+    opacity: 0.6; /* Ícone mais discreto */
 }
