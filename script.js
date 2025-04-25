@@ -36,14 +36,36 @@ document.addEventListener("DOMContentLoaded", async () => {
             div.classList.add("image-container");
 
             if (post.images.length > 0) {
-                div.innerHTML = `
-                    <div class="date-box">${formatDate(post.date)}</div>
-                    <img src="${post.images[0]}" alt="Postagem">
-                    ${post.mediaType === "Vídeo" ? '<img class="video-icon" src="public/icons/reels.svg" alt="Reels">' : ""}
-                    ${post.fixed ? '<img class="fixed-icon" src="public/icons/pinned.svg" alt="Fixado">' : ""}
-                `;
+                if (post.mediaType === "Carrossel" && post.images.length > 1) {
+                    div.classList.add("carousel");
+                    div.innerHTML = `
+                        <div class="date-box">${formatDate(post.date)}</div>
+                        <div class="carousel-inner">
+                            ${post.images.map((image, index) => `<img class="slide ${index === 0 ? 'active' : ''}" src="${image}">`).join('')}
+                        </div>
+                        <button class="prev">&#10095;</button>
+                        <button class="next">&#10095;</button>
+                        <div class="dots">
+                            ${post.images.map((_, index) => `<span class="dot ${index === 0 ? 'active' : ''}"></span>`).join('')}
+                        </div>
+                        ${post.fixed ? '<img class="fixed-icon" src="public/icons/fixed.png" alt="Fixado">' : ""}
+                    `;
+
+                    // Adicionar eventos de clique para os botões de navegação
+                    const prevButton = div.querySelector(".prev");
+                    const nextButton = div.querySelector(".next");
+                    prevButton.addEventListener("click", () => changeSlide(postIndex, -1));
+                    nextButton.addEventListener("click", () => changeSlide(postIndex, 1));
+                } else {
+                    div.innerHTML = `
+                        <div class="date-box">${formatDate(post.date)}</div>
+                        <img src="${post.images[0]}" alt="Postagem">
+                        ${post.mediaType === "Vídeo" ? '<img class="video-icon" src="public/icons/reels.png" alt="Reels">' : ""}
+                        ${post.fixed ? '<img class="fixed-icon" src="public/icons/fixed.png" alt="Fixado">' : ""}
+                    `;
+                }
             } else {
-                div.innerHTML = `<div class="placeholder"><img src="public/icons/picture.svg" alt="Sem imagem"></div>`;
+                div.innerHTML = `<div class="placeholder"><img src="public/icons/placeholder.png" alt="Sem imagem"></div>`;
             }
 
             imageGrid.appendChild(div);
@@ -52,7 +74,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         for (let i = 0; i < emptySlots; i++) {
             const div = document.createElement("div");
             div.classList.add("image-container");
-            div.innerHTML = `<div class="placeholder"><img src="public/icons/picture.svg" alt="Sem imagem"></div>`;
+            div.innerHTML = `<div class="placeholder"><img src="public/icons/placeholder.png" alt="Sem imagem"></div>`;
             imageGrid.appendChild(div);
         }
     }
@@ -61,6 +83,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     function toggleLoadMoreButton() {
         loadMoreBtn.style.display = allPosts.length > displayedCount ? "block" : "none";
     }
+
+    // 🔄 Navegação no Carrossel
+    window.changeSlide = function (postIndex, direction) {
+        const container = imageGrid.children[postIndex];
+        const slides = container.querySelectorAll(".slide");
+        const dots = container.querySelectorAll(".dot");
+        const activeIndex = Array.from(slides).findIndex(slide => slide.classList.contains("active"));
+        const newIndex = (activeIndex + direction + slides.length) % slides.length;
+        setSlide(slides, dots, newIndex);
+    };
+
+    window.setSlide = function (slides, dots, newIndex) {
+        slides.forEach((slide, i) => slide.classList.toggle("active", i === newIndex));
+        dots.forEach((dot, i) => dot.classList.toggle("active", i === newIndex));
+    };
 
     // 🔄 Botão de Atualizar
     refreshBtn?.addEventListener("click", fetchImages);
